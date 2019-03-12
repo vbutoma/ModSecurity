@@ -78,6 +78,11 @@ class RuleWithActions : public Rule {
         int *nth);
 
 
+    void performLogging(Transaction *trans,
+        std::shared_ptr<RuleMessage> ruleMessage,
+        bool lastLog = true,
+        bool chainedParentNull = false);
+
     std::vector<actions::Action *> getActionsByName(const std::string& name,
         Transaction *t);
     bool containsTag(const std::string& name, Transaction *t);
