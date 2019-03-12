@@ -45,24 +45,18 @@ class RuleWithActions : public Rule {
 
     ~RuleWithActions();
 
-    bool evaluate(Transaction *transaction, std::shared_ptr<RuleMessage> ruleMessage) override;
-
     virtual bool evaluate(Transaction *transaction) override;
-
 
     void executeActionsIndependentOfChainedRuleResult(
         Transaction *trasn,
-        bool *containsDisruptive,
-        std::shared_ptr<RuleMessage> ruleMessage);
+        bool *containsDisruptive);
 
     void executeActionsAfterFullMatch(
         Transaction *trasn,
-        bool containsDisruptive,
-        std::shared_ptr<RuleMessage> ruleMessage);
+        bool containsDisruptive);
 
     void executeAction(Transaction *trans,
         bool containsBlock,
-        std::shared_ptr<RuleMessage> ruleMessage,
         actions::Action *a,
         bool context);
 
@@ -79,7 +73,6 @@ class RuleWithActions : public Rule {
 
 
     void performLogging(Transaction *trans,
-        std::shared_ptr<RuleMessage> ruleMessage,
         bool lastLog = true,
         bool chainedParentNull = false);
 
