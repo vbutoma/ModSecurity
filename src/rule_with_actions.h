@@ -184,7 +184,7 @@ class RuleWithActions : public Rule {
         m_maturity = maturity;
     }
 
-    inline int64_t getId() { return m_ruleId; }
+    inline RuleId getId() { return m_ruleId; }
     void setId(int id) {
         m_ruleId = id;
     }
@@ -239,7 +239,7 @@ class RuleWithActions : public Rule {
     /* actions > transformations */
     Transformations m_transformations;
 
-    int64_t m_ruleId;
+    RuleId m_ruleId;
     int m_accuracy;
     int m_maturity;
     std::string m_revision;
