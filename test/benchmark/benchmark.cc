@@ -40,13 +40,13 @@ unsigned char response_body[] = "" \
 
 char ip[] = "200.249.12.31";
 
-char rules_file[] = "basic_rules.conf";
+char rules_file[] = "/home/vitaly/MINE/DevOps/ModSecurity/test/benchmark/basic_rules.conf";
 
 const char* const help_message = "Usage: benchmark [num_iterations|-h|-?|--help]";
 
 int main(int argc, char *argv[]) {
 
-    unsigned long long NUM_REQUESTS(1000000);
+    unsigned long long NUM_REQUESTS(1000);
 
     if (argc > 1) {
         if (0 == strcmp(argv[1], "-h") ||
