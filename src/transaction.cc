@@ -880,6 +880,7 @@ int Transaction::processRequestBody() {
 
 /**
  * @name    appendRequestBody
+ * 
  * @brief   Adds request body to be inspected.
  *
  * With this method it is possible to feed ModSecurity with data for

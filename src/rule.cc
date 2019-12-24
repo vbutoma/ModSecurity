@@ -688,13 +688,15 @@ bool Rule::evaluate(Transaction *trans,
     }
 
     getFinalVars(&vars, &exclusion, trans);
-
+    std::cout << "Start of vars cycle" << std::endl;
     for (auto &var : vars) {
         std::vector<const VariableValue *> e;
         if (!var) {
             continue;
         }
         var->evaluate(trans, this, &e);
+        int count = 0;   
+        std::cout << "\t Starting checks" << std::endl;
         for (const VariableValue *v : e) {
             const std::string &value = v->getValue();
             const std::string &key = v->getKeyWithCollection();
@@ -724,16 +726,19 @@ bool Rule::evaluate(Transaction *trans,
 
             std::list<std::pair<std::shared_ptr<std::string>,
                 std::shared_ptr<std::string>>> values;
-
+            std::cout << "\t\t Starting transforms" << std::endl;
             values = executeDefaultTransformations(trans, value);
-
+            std::cout << "\t\t Transforms ended" << std::endl;
+                     
             for (const auto &valueTemp : values) {
+                count++;
                 bool ret;
                 std::string valueAfterTrans = std::move(*valueTemp.first);
-
+                std::cout << "\t\t" << valueAfterTrans << std::endl;
                 ret = executeOperatorAt(trans, key, valueAfterTrans, ruleMessage);
 
                 if (ret == true) {
+                    std::cout << "RET TRUE" << std::endl;
                     ruleMessage->m_match = m_op->resolveMatchMessage(trans,
                         key, value);
                     for (auto &i : v->getOrigin()) {
@@ -763,12 +768,15 @@ bool Rule::evaluate(Transaction *trans,
                     globalRet = true;
                 }
             }
+            
             delete v;
             v = NULL;
         }
+        std::cout << "Number of checks: " << count << std::endl;
         e.clear();
         e.reserve(4);
     }
+    std::cout << "End of vars cycle" << std::endl;
 
     if (globalRet == false) {
         ms_dbg_a(trans, 4, "Rule returned 0.");
